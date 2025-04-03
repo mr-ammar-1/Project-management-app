@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Updates - Project Management App</title>
+    <link rel="stylesheet" href="../styles/updates.css">
+</head>
+<body>
+    <header>
+        <h1>Project Updates</h1>
+        <nav>
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="project.html">Projects</a></li>
+                <li><a href="tasks.html">Tasks</a></li>
+                <li><a href="reminders.html">Reminders</a></li>
+                <li><a href="updates.html">Updates</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="task-list task-list-container">
+            <h2>Recent Updates</h2>
+            <ul id="taskContainer">
+                <!-- Tasks will be dynamically populated here -->
+            </ul>
+        </section>
+        
+        <section class="add-update">
+            <h2>Update Task Status</h2>
+            <form id="updateTaskStatusForm">
+                <label for="taskId">Select Task:</label>
+                <select id="taskId" name="taskId" required>
+                    <!-- Task options will be dynamically populated here -->
+                </select>
+                <label for="status">Select Status:</label>
+                <select id="status" name="status" required>
+                    <option value="completed">Completed</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="pending">Pending</option>
+                </select>
+                <button type="submit">Update Status</button>
+            </form>
+        </section>
+    </main>
+    
+    <script src="../scripts/updates.js"></script>
+</body>
+</html>

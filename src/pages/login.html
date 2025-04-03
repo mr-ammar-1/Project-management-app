@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Signup</title>
+    <link rel="stylesheet" href="../styles/auth.css">
+</head>
+<body>
+
+    <div class="auth-container">
+        <h2>Login</h2>
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Password">
+        <button class="auth-Button" onclick="login()">Login</button>
+    </div>
+
+    <script>
+        async function login() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            if (!email || !password) {
+                alert("Please enter email and password!");
+                return;
+            }
+
+            try {
+                const response = await fetch("http://localhost:3000/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert("Login successful!");
+
+                    // Store email and password in local storage
+                    localStorage.setItem("email", email);
+                    localStorage.setItem("password", password);
+
+                    if(email == "admin@gmail.com"){
+                        window.location.href = "adminDashboard.html";
+                    }
+                    else{
+                        window.location.href = "dashboard.html";
+
+                    }
+
+                    
+                    // Redirect to dashboard
+                } else {
+                    alert(data.message || "Login failed!");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("An error occurred while logging in.");
+            }
+        }
+    </script>
+
+</body>
+</html>

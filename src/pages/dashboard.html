@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Project Management App</title>
+    <link rel="stylesheet" href="../styles/dashboard.css">
+</head>
+<body>
+    <header>
+        <h1>Dashboard</h1>
+        <nav>
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="project.html">Projects</a></li>
+                <li><a href="tasks.html">Tasks</a></li>
+                <li><a href="reminders.html">Reminders</a></li>
+                <li><a href="updates.html">Updates</a></li>
+            </ul>
+        </nav>
+        <div class="user-info">
+            <span id="userEmail"></span>
+            <div class="dropdown">
+                <button class="dropbtn">▼</button>
+                <div class="dropdown-content">
+                    <a href="#" id="logoutBtn">Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <section class="overview">
+            <h2>Notifications</h2>
+            <ul id="notificationsList"></ul>
+        </section>
+        
+        <section class="stats">
+            <div class="card">
+                <h3>Active Tasks</h3>
+                <p></p>
+            </div>
+            <div class="card">
+                <h3>Completed Tasks</h3>
+                <p></p>
+            </div>
+            <div class="card">
+                <h3>Pending Reminders</h3>
+                <p>5</p>
+            </div>
+        </section>
+    </main>
+    
+    <script src="../scripts/dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const email = localStorage.getItem('email');
+            if (email) {
+                document.getElementById('userEmail').textContent = email;
+                fetchNotifications(email);
+            }
+
+            document.getElementById('logoutBtn').addEventListener('click', () => {
+                localStorage.removeItem('email');
+                localStorage.removeItem('password');
+                window.location.href = 'login.html';
+            });
+        });
+
+        function fetchNotifications(email) {
+            fetch(`http://localhost:3000/notifications/${email}`)
+                .then(response => response.json())
+                .then(notifications => {
+                    const notificationsList = document.getElementById('notificationsList');
+                    notificationsList.innerHTML = '';
+                    notifications.forEach(notification => {
+                        const li = document.createElement('li');
+                        li.textContent = notification.message;
+                        notificationsList.appendChild(li);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching notifications:', error);
+                });
+        }
+    </script>
+</body>
+</html>

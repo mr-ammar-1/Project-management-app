@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasks - Project Management App</title>
+    <link rel="stylesheet" href="../styles/tasks.css">
+</head>
+<body>
+    <header>
+        <h1>Task Management</h1>
+        <nav>
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="project.html">Projects</a></li>
+                <li><a href="tasks.html">Tasks</a></li>
+                <li><a href="reminders.html">Reminders</a></li>
+                <li><a href="updates.html">Updates</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="task-filters">
+            <input type="text" id="taskSearch" placeholder="Search tasks..." onkeyup="filterTasks()">
+            <select id="taskFilter" onchange="filterTasks()">
+                <option value="all">All</option>
+                <option value="todo">To Do</option>
+                <option value="in_progress">In Progress</option>
+                <option value="completed">Completed</option>
+                <option value="archived">Archived</option>
+            </select>
+        </section>
+        
+        <section class="task-list task-list-container">
+            <h2>Your Tasks</h2>
+            <ul id="taskContainer">
+                <!-- Tasks will be dynamically populated here -->
+            </ul>
+        </section>
+        
+        
+        <section class="add-task">
+            <h2>Add New Task</h2>
+            <input type="text" id="taskInput" placeholder="Enter task name" required>
+            <input type="text" id="projectDescription" placeholder="Enter project description" required>
+            <input type="date" id="dueDate" required>
+            
+            <select id="taskStatus" required>
+                <option value="todo">To Do</option>
+                <option value="in_progress">In Progress</option>
+                <option value="completed">Completed</option>
+                <option value="archived">Archived</option>
+            </select>
+            <select id="projectDropdown" required>
+                <!-- Project options will be dynamically populated here -->
+            </select>
+            <button onclick="addTask()">Add Task</button>
+        </section>
+        <section class="add-task">
+            <h2>Assign Task</h2>
+            <select id="taskId" required>
+                <!-- Task options will be dynamically populated here -->
+            </select>
+            <select id="assigneeId" required>
+                <!-- Assignee options will be dynamically populated here -->
+            </select>
+            <button onclick="assignTask()">Assign Task</button>
+        </section>
+    </main>
+    
+    <script src="../scripts/tasks.js"></script>
+</body>
+</html>

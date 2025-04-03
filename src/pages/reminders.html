@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reminders - Project Management App</title>
+    <link rel="stylesheet" href="../styles/reminders.css">
+</head>
+<body>
+    <header>
+        <h1>Task Reminders</h1>
+        <nav>
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="project.html">Projects</a></li>
+                <li><a href="tasks.html">Tasks</a></li>
+                <li><a href="reminders.html">Reminders</a></li>
+                <li><a href="updates.html">Updates</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="reminder-list">
+            <h2>Upcoming Reminders</h2>
+            <ul id="reminderContainer">
+                <!-- Reminders will be dynamically inserted here by the script -->
+            </ul>
+        </section>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const email = localStorage.getItem('email');
+            const password = localStorage.getItem('password');
+            fetch(`http://localhost:3000/tasks/due-tomorrow/${email}`, {
+                headers: {
+                    email:email,
+                    password:password
+                }
+            })
+            .then(response => response.json())
+            .then(reminders => {
+                const reminderContainer = document.getElementById('reminderContainer');
+                reminderContainer.innerHTML = ''; // Clear existing reminders
+
+                reminders.forEach(reminder => {
+                    const li = document.createElement('li');
+                    li.textContent = `${reminder.description} ${reminder.due_date}`;
+                    const span = document.createElement('span');
+                    span.className = `status ${reminder.status.toLowerCase()}`;
+                    span.textContent = reminder.status;
+                    li.appendChild(span);
+                    reminderContainer.appendChild(li);
+                });
+            })
+            .catch(error => console.error('Error fetching reminders:', error));
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0f172a, #1e3a8a);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Container */
+.auth-container {
+    background: #1e293b;
+    padding: 40px;
+    width: 350px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+/* Heading */
+.auth-container h2 {
+    color: #f8fafc;
+    margin-bottom: 20px;
+}
+
+
+/* Input Fields */
+.auth-container input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    background: #334155;
+    color: #f8fafc;
+    outline: none;
+}
+
+.auth-container input::placeholder {
+    color: #94a3b8;
+}
+
+/* Button */
+.auth-container .auth-Button {
+    width: 100%; /* Ensures full width */
+    padding: 14px; /* Slightly increased padding for better alignment */
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: 600;
+    background: #3b82f6;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    display: block; /* Ensures full width */
+    box-sizing: border-box; /* Prevents extra width from padding */
+}
+
+.auth-container .auth-Button:hover {
+    background: #1e40af;
+}
+
+/* Links */
+.auth-container p {
+    color: #94a3b8;
+    margin-top: 15px;
+}
+
+.auth-container a {
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-container a:hover {
+    text-decoration: underline;
+}

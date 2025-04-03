@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Project Management App</title>
+    <link rel="stylesheet" href="../styles/project.css">
+</head>
+<body>
+    <header>
+        <h1>Project Management</h1>
+        <nav>
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="project.html">Projects</a></li>
+                <li><a href="tasks.html">Tasks</a></li>
+                <li><a href="reminders.html">Reminders</a></li>
+                <li><a href="updates.html">Updates</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="project-list">
+            <h2>Your Projects</h2>
+            <ul id="projectContainer">
+                <!-- Projects will be dynamically loaded here -->
+            </ul>
+        </section>
+        
+        <section class="add-project">
+            <h2>Add New Project</h2>
+            <input type="text" id="projectInput" placeholder="Enter project name">
+            <input type="text" id="projectDescription" placeholder="Enter project description">
+            <select id="projectStatus">
+                <option value="active">Active</option>
+                <option value="archived">Archived</option>
+            </select>
+            <button onclick="addProject()">Add Project</button>
+        </section>
+    </main>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", fetchProjects);
+
+        async function fetchProjects() {
+            const email = localStorage.getItem("email");
+            const password = localStorage.getItem("password");
+
+            const response = await fetch("http://localhost:3000/projects", {
+                headers: {
+                    email: email,
+                    password: password
+                }
+            });
+            const projects = await response.json();
+            const projectContainer = document.getElementById("projectContainer");
+            projectContainer.innerHTML = "";
+            projects.forEach(project => {
+                const li = document.createElement("li");
+                li.innerHTML = `${project.name} <span class="status ${project.status}">${project.status}</span>
+                    <button onclick="deleteProject('${project.project_id}')">Delete</button>`;
+                projectContainer.appendChild(li);
+            });
+        }
+
+        async function addProject() {
+            const name = document.getElementById("projectInput").value;
+            const description = document.getElementById("projectDescription").value;
+            const status = document.getElementById("projectStatus").value;
+            const email = localStorage.getItem("email");
+            const password = localStorage.getItem("password");
+
+            if (!name || !description || !status) {
+                alert("All fields are required!");
+                return;
+            }
+
+            await fetch("http://localhost:3000/projects", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    email: email,
+                    password: password
+                },
+                body: JSON.stringify({ name, description, status, created_by: "user_id" }) // Replace with actual user_id
+            });
+            alert('Project added successfully');
+            fetchProjects();
+        }
+
+        async function deleteProject(project_id) {
+            const email = localStorage.getItem("email");
+            const password = localStorage.getItem("password");
+
+            await fetch(`http://localhost:3000/projects/${project_id}`, {
+                method: "DELETE",
+                headers: {
+                    email: email,
+                    password: password
+                }
+            });
+            fetchProjects();
+        }
+    </script>
+</body>
+</html>
