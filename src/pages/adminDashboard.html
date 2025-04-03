@@ -65,7 +65,7 @@
         });
 
         function fetchNotifications(email) {
-            fetch(`http://localhost:3000/notifications/${email}`)
+            fetch(`https://project-management-app-zeta-eight.vercel.app/notifications/${email}`)
                 .then(response => response.json())
                 .then(notifications => {
                     const notificationsList = document.getElementById('notificationsList');
